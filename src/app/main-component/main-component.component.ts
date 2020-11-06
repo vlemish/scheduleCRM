@@ -11,10 +11,4 @@ export class MainComponentComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-  class : string = "";
-
-  onEnter(){
-
-  }
 }
