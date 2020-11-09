@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace WebApi_scheduleCRM
+namespace ScheduleCRM_Web_Api
 {
     public class Startup
     {
@@ -25,6 +25,8 @@ namespace WebApi_scheduleCRM
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options => options.AddDefaultPolicy(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod()));
+
             services.AddControllers();
         }
 
@@ -39,6 +41,8 @@ namespace WebApi_scheduleCRM
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 

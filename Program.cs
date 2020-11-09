@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace WebApi_scheduleCRM
+namespace ScheduleCRM_Web_Api
 {
     public class Program
     {
