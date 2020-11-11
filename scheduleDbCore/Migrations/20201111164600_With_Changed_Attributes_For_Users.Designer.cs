@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using scheduleDbCore.EF;
 
 namespace scheduleDbCore.Migrations
 {
     [DbContext(typeof(ScheduleEntities))]
-    partial class ScheduleEntitiesModelSnapshot : ModelSnapshot
+    [Migration("20201111164600_With_Changed_Attributes_For_Users")]
+    partial class With_Changed_Attributes_For_Users
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
