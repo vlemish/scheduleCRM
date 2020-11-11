@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
-import { NgModel } from '@angular/forms';
 import { LoginService } from '../services/login.service';
 import { User } from '../models/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-component',
@@ -12,18 +12,18 @@ import { User } from '../models/user';
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
-  constructor(private loginService : LoginService) { }
+  constructor(private router: Router ,private loginService : LoginService) { }
 
-  //instance of a user to form a user from input's fields data
+  //instance of a user to form the user from input's fields data
   user : User = new User(null, null);
-  //varible to store icon
+  //varible to store an icon
   faEye = faEye;
   //boolen variable to change input's type
   isPasswordShowable : boolean = false;
-  //variable to store type of password it can be either password(not viewable) or text(viewable)
+  //variable to store a type of password it can be either password(not viewable) or text(viewable)
   passwordType : string = "password";
 
-  //to show message that inputted password or usrname isn't correct
+  //to show the message that givven password or username isn't correct
   private errorMessage : string = "";
   get ErrorMessage(){
     if(!this.isCorrectData){
@@ -50,14 +50,21 @@ export class LoginComponent implements OnInit, OnDestroy {
   //a varible to check whether the user with this username and this pasword exist
   isCorrectData : boolean = true;
 
+  //array with anchors
   ngOnInit(): void {
-    let el = document.getElementById("_body");
-    el.style.backgroundColor="#ebebeb";
+    let appWrapper = document.getElementById("container");
+    appWrapper.classList.remove("container");
+    appWrapper.classList.remove("body-content");    
+    let bodyStyle = document.getElementById("_body");
+    bodyStyle.style.backgroundColor="#ebebeb";
   }
 
   ngOnDestroy() : void{
-    let el = document.getElementById("_body");
-    el.style.backgroundColor="white";
+    let bodyStyle = document.getElementById("_body");
+    bodyStyle.style.backgroundColor="white";
+    let appWrapper = document.getElementById("container");
+    appWrapper.classList.add("container");
+    appWrapper.classList.add("body-content");
   }
 
   //changes input type from password to text or in opposite direction (from text to password)
@@ -97,13 +104,34 @@ export class LoginComponent implements OnInit, OnDestroy {
   //sends formed user to the server and gets the response. If the user is exist it means that the data has spelled correct, so client will be redirected to another page and etc.
   //If the user doesn't exist, isCorrectData variable would change to false and that would return to client an error message  
   loginUser(){
-    this.loginService.getUser(this.user).subscribe(response=>{
-      if(response!=null){
+    if(this.user.username===null || this.user.password===null){
+      this.onUsernameBlur();
+      this.onPasswordBlur();
+      return;
+    }
+    this.loginService.logIn(this.user).subscribe((response : any)=>{
         this.isCorrectData = true;
+        this.loginService.setToken(response.token);
+        this.loginService.setIdentity(response.identity);
+        console.log(this.loginService.getToken());
+        console.log(this.loginService.getIdentity());
+        this.router.navigate(['/main']);
+    },
+    err=>{
+      if(err.status == 400){
+        this.isCorrectData=false;
+        this.loginService.removeToken('token');
+        this.loginService.removeIdentity('identity');
       }
-      else{
-        this.isCorrectData = false;
-      }
-    })
+    });
+  }
+  //sets the identity to the Guest, the user will have all the resources that allowed for the Guest identity 
+  loginGuest(){
+    this.loginService.setIdentity('Guest');
+    this.loginService.setToken('tooooooooooooooooooooooooooooooooooooollllllllllllllllllkkkkkkkkken');
+    this.router.navigate(['main']);
+  }
+  scrollTo(id : string){
+    window.location.hash = id;
   }
 }

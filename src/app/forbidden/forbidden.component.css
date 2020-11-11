@@ -1,0 +1,47 @@
+.forbidden-content{
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 600px;
+    width: 800px;
+}
+.forbidden-img{
+    margin-left: auto;
+    margin-right: auto;
+    height: 450px;
+    width: 450px;
+    margin-bottom: 10px;
+}
+.forbidden-img img{
+    height: 450px;
+    width: 450px;
+}
+.forbidden-title{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-size: 26px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color:#039be5;
+    margin-bottom: 10px;
+}
+.forbidden-text{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-size: 21px;;
+}
+@media (max-width: 920px) {
+    .forbidden-img, .forbidden-img img {
+        height: 250px;
+        width: 250px;
+        margin-bottom: 5px;
+    }
+}
+@media (max-width: 920px) {
+    .forbidden-content {
+        margin-top: 50px;
+        height: 400px;
+        width: 600px;
+    }
+}

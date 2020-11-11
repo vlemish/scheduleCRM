@@ -1,4 +1,13 @@
-<div class="limiter">
+<div class="login-or-continue"  id="login-or-continue">
+    <div class="left-side">
+        <p><a (click)="scrollTo('login-form')">LOG IN</a></p>
+    </div>
+    <div class="right-side">
+        <p>or <a (click)="loginGuest()">continue as a Guest</a></p>
+    </div>
+</div>
+<div class="limiter" id="login-form">
+    
     <div class="container-login100">
         <div class="wrap-login100">
             <form class="login100-form validate-form flex-sb flex-w" method="post">
